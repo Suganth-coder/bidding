@@ -1,4 +1,12 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require_once '../vendor/autoload.php';
+
+
+
 session_start();
 ini_set('display_errors', 1);
 Class Action {
@@ -371,7 +379,38 @@ Class Action {
 
 	}
 
-	function send_otp(){
-		
+	function send_otp($email,$otp,$name="defalut"){	
+
+		$mail = new PHPMailer();
+		$mail->SMTPDebug = false;
+		$mail->IsSMTP();
+		$mail->Mailer = "smtp";
+
+		// Configuring the required things
+		$mail->SMTPDebug  = 1;  
+		$mail->SMTPAuth   = TRUE;
+		$mail->SMTPSecure = "tls";
+		$mail->Port       = 587;
+		$mail->Host       = "smtp.gmail.com";
+		$mail->Username   = "srn2000.rr@gmail.com";
+		$mail->Password   = "Sriram(98765)";
+
+		// Sending the required parameters
+		$mail->IsHTML(true);
+		$mail->AddAddress($email, $name);
+		$mail->SetFrom("srn2000.rr@gmail.com", "sriram");
+		// $mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
+		// $mail->AddCC("cc-recipient-email@domain", "cc-recipient-name");
+		$mail->Subject = "Bidding Website Verification";
+		$content = "OTP for Bidding Website ".$otp;
+
+		$mail->MsgHTML($content); 
+		if(!$mail->Send()) {
+		return 400;
+		var_dump($mail);
+		} else {
+		return 200;
+		}
+
 	}
 }

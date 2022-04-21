@@ -15,8 +15,8 @@
 			<textarea cols="30" rows="3" name="address" required="" class="form-control"></textarea>
 		</div>
 		<div class="form-group">
-			<label for="" class="control-label">Email</label>
-			<input type="email" name="email" required="" class="form-control">
+			<label for="" class="control-label" >Email</label>
+			<input type="email" name="email" required="" id="email" class="form-control">
 		</div>
 		<div class="form-group">
 			<label for="" class="control-label">Username</label>
@@ -67,14 +67,24 @@
 	$('#signup-frm').submit(function(e){
 
 
-		let otp = parseInt(prompt("[Check your email. Otp has been sent successfully!]\nEnter your otp: "));
-
-		if (otp == 454523){
+		// let otp = parseInt(prompt("[Check your email. Otp has been sent successfully!]\nEnter your otp: "));
 
 			e.preventDefault()
 			start_load()
 			if($(this).find('.alert-danger').length > 0 )
 				$(this).find('.alert-danger').remove();
+
+			var otp = Math.floor(Math.random() * 899999 + 100000);
+			// Post request for otp 
+			console.log("email value: "+$("#email").val());
+			console.log("OTP: "+otp);
+
+			$.post("admin/ajax.php?action=otp",{"email":$('#email').val(),"otp":otp}, function(data, status){
+				alert("Data: " + data + "\nStatus: " + status);
+			});
+
+			exit();
+
 			$.ajax({
 				url:'admin/ajax.php?action=signup',
 				method:'POST',
@@ -94,8 +104,6 @@
 				}
 			})
 
-		}else{
-			alert("Otp verification failed");
-		}
+
 	})
 </script>

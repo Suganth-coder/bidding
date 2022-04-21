@@ -23,6 +23,17 @@ if($action == 'logout2'){
 	if($logout)
 		echo $logout;
 }
+
+if ($action == 'otp'){
+
+	if (isset($_POST['email']) and isset($_POST['otp'])){
+		$res = $crud->send_otp($_POST['email'],$_POST['otp']);
+		print_r(json_encode(['code'=>200]));
+	}else{
+		print_r(json_encode(['code'=>404]));
+	}
+}
+
 if($action == 'save_user'){
 	$save = $crud->save_user();
 	if($save)
