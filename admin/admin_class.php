@@ -398,7 +398,7 @@ Class Action {
 		// Sending the required parameters
 		// $mail->IsHTML(true);
 		$mail->AddAddress($email, $name);
-		$mail->SetFrom("srn2000.rr@gmail.com", "sriram");
+		$mail->SetFrom("srn2000.rr@gmail.com", "Bidding Website");
 		// $mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
 		// $mail->AddCC("cc-recipient-email@domain", "cc-recipient-name");
 		$mail->Subject = "Bidding Website Verification";

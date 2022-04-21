@@ -109,6 +109,7 @@
 						})
 					}else{
 						alert("OTP verfication failed");
+						location.reload();
 					}
 				}else if(data.code == 400){
 					alert("Error in sending the mail!");
