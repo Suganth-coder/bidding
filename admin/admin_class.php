@@ -102,6 +102,9 @@ Class Action {
 			return 1;
 	}
 	function signup(){
+
+		//TODO: Verify otp here
+
 		extract($_POST);
 		$data = " name = '$name' ";
 		$data .= ", username = '$username' ";
@@ -366,5 +369,9 @@ Class Action {
 		if($commit)
 			return 1;
 
+	}
+
+	function send_otp(){
+		
 	}
 }
