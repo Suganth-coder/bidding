@@ -28,9 +28,12 @@ if ($action == 'otp'){
 
 	if (isset($_POST['email']) and isset($_POST['otp'])){
 		$res = $crud->send_otp($_POST['email'],$_POST['otp']);
-		print_r(json_encode(['code'=>200]));
+		if ($res == 200)
+			echo json_encode(['code'=>200]);
+		else 
+		echo json_encode(['code'=>400]);
 	}else{
-		print_r(json_encode(['code'=>404]));
+		echo json_encode(['code'=>404]);
 	}
 }
 

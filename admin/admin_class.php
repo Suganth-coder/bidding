@@ -387,7 +387,7 @@ Class Action {
 		$mail->Mailer = "smtp";
 
 		// Configuring the required things
-		$mail->SMTPDebug  = 1;  
+		$mail->SMTPDebug  = 0;  
 		$mail->SMTPAuth   = TRUE;
 		$mail->SMTPSecure = "tls";
 		$mail->Port       = 587;
@@ -396,7 +396,7 @@ Class Action {
 		$mail->Password   = "Sriram(98765)";
 
 		// Sending the required parameters
-		$mail->IsHTML(true);
+		// $mail->IsHTML(true);
 		$mail->AddAddress($email, $name);
 		$mail->SetFrom("srn2000.rr@gmail.com", "sriram");
 		// $mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
@@ -407,7 +407,7 @@ Class Action {
 		$mail->MsgHTML($content); 
 		if(!$mail->Send()) {
 		return 400;
-		var_dump($mail);
+		// var_dump($mail);
 		} else {
 		return 200;
 		}

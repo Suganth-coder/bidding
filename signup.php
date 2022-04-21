@@ -74,35 +74,50 @@
 			if($(this).find('.alert-danger').length > 0 )
 				$(this).find('.alert-danger').remove();
 
-			var otp = Math.floor(Math.random() * 899999 + 100000);
+			var otp = parseInt(Math.floor(Math.random() * 899999 + 100000));
 			// Post request for otp 
-			console.log("email value: "+$("#email").val());
-			console.log("OTP: "+otp);
+			// console.log("email value: "+$("#email").val());
+			// console.log("OTP: "+otp);
 
 			$.post("admin/ajax.php?action=otp",{"email":$('#email').val(),"otp":otp}, function(data, status){
-				alert("Data: " + data + "\nStatus: " + status);
+				data = JSON.parse(data);
+
+				if (data.code == 200){
+
+					alert("Check your mail otp has been sent successfully!");
+				    let user_otp = parseInt(prompt("Enter the OTP that has been sent to your email"));
+
+
+					if (otp == user_otp){					
+						$.ajax({
+							url:'admin/ajax.php?action=signup',
+							method:'POST',
+							data:$("#signup-frm").serialize(),
+							error:err=>{
+								console.log(err)
+						$('#signup-frm button[type="submit"]').removeAttr('disabled').html('Create');
+
+							},
+							success:function(resp){
+								if(resp == 1){
+									location.reload();
+								}else{
+									$('#signup-frm').prepend('<div class="alert alert-danger">Email already exist.</div>')
+									end_load()
+								}
+							}
+						})
+					}else{
+						alert("OTP verfication failed");
+					}
+				}else if(data.code == 400){
+					alert("Error in sending the mail!");
+				}else{
+					alert("Error in inputs");
+				}
 			});
 
-			exit();
 
-			$.ajax({
-				url:'admin/ajax.php?action=signup',
-				method:'POST',
-				data:$(this).serialize(),
-				error:err=>{
-					console.log(err)
-			$('#signup-frm button[type="submit"]').removeAttr('disabled').html('Create');
-
-				},
-				success:function(resp){
-					if(resp == 1){
-						location.reload();
-					}else{
-						$('#signup-frm').prepend('<div class="alert alert-danger">Email already exist.</div>')
-						end_load()
-					}
-				}
-			})
 
 
 	})
